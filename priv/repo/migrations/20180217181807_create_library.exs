@@ -3,15 +3,14 @@ defmodule Extop.Repo.Migrations.CreateLibrary do
 
   def change do
     create table(:libraries) do
-      add :name,     :string
-      add :url,      :string
-      add :desc,     :string
+      add :name,     :string,  null: false
+      add :url,      :string,  null: false
+      add :desc,     :string,  null: false
       add :stars,    :integer
       add :commited, :string
       add :is_git,   :boolean
-      timestamps
+      add :folder,   :string,  null: false
+      timestamps()
     end
-
-    create unique_index(:libraries, [:name])
   end
 end

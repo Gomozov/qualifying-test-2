@@ -20,7 +20,7 @@ defmodule Extop.Mixfile do
   def application do
     [
       mod: {Extop, []},
-      extra_applications: [:logger]
+      extra_applications: [:logger, :httpoison]
     ]
   end
 
@@ -40,7 +40,9 @@ defmodule Extop.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      { :httpoison, "~> 0.9" },
+      { :poison, "~> 2.2"}
     ]
   end
 

@@ -1,4 +1,29 @@
 <div class="jumbotron">
-  <h2>EliXir TOP list</h2>
-  <p class="lead">Elixir is awesome. And it has a vast awesome list: <a href="https://github.com/h4cc/awesome-elixir">h4cc/awesome-elixir</a>. This is a mirror of it where each library is marked with number of stars at <a href="https://github.com">Github</a> and number of days since the last commit.</p>
+  <h3>EliXir TOP list</h3>
+  <p class="lead">Elixir has a vast awesome list: <a href="https://github.com/h4cc/awesome-elixir">h4cc/awesome-elixir</a>. This is a mirror of it where each library is marked with number of stars at <a href="https://github.com">Github</a> and number of days since the last commit.</p>
 </div>
+
+<h4>Files</h4>
+
+<table class="table">
+  <%= for file <- @files do %>
+    <tr>
+      <td><b><%= file.size %></b> (<%= file.id %>)</td>
+      <td><%= file.loaded %></td>
+      <td><%= file.sha %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h4>Libraries</h4>
+
+<table class="table">
+  <%= for library <- @libraries do %>
+    <tr>
+      <td><b><%= library.name %></b> (<%= library.id %>)</td>
+      <td><%= library.url %></td>
+      <td><%= library.desc %></td>
+      <td><%= library.folder %></td>
+    </tr>
+  <% end %>
+</table>

@@ -3,10 +3,10 @@ defmodule Extop.Repo.Migrations.CreateFile do
 
   def change do
     create table(:files) do
-      add :sha,      :string
-      add :size,     :integer
-      add :loaded,   :string
-      timestamps
+      add :sha,      :string,  null: false
+      add :size,     :integer, null: false
+      add :loaded,   :string,  null: false
+      timestamps()
     end
 
     create unique_index(:files, [:sha])

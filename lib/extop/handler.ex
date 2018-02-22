@@ -16,13 +16,14 @@ defmodule Extop.Handler do
     |> handle_response
   end
 
-  def handle_response({ _, %{status_code: status}}) do
+  def handle_response({ _, %{status_code: status, body: body}}) do
     Logger.error "Error #{status} returned"
-    {:error, %{}}
+    IO.inspect body
+    {:error, status}
   end
   
   def handle_response({ :error, %{reason: reason}}) do
     Logger.error "Error: #{reason}"
-    {:error, %{}}
+    {:error, reason}
   end
 end

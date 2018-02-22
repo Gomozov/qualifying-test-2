@@ -24,6 +24,8 @@
       <td><%= library.url %></td>
       <td><%= library.desc %></td>
       <td><%= library.folder %></td>
+      <td><%= library.stars %></td>
+      <td><%= library.commited %></td>
     </tr>
   <% end %>
 </table>

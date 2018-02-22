@@ -6,14 +6,21 @@ defmodule Extop.Pollster do
   def polling() do
     Logger.info "Start polling"
     Extop.Repo.all(Extop.Library)
-    |> Enum.map(&take_info/1)
-    |> save_libraries
+     |> Enum.take(5)
+     |> Enum.map(&async_take_info/1)
+     |> Enum.map(fn(_) -> get_result() end)
   end
 
-  def save_libraries(libs) do
-    Extop.Repo.delete_all(Extop.Library)
-    libs
-    |> Enum.map(&Extop.Repo.insert(&1))
+  def async_take_info(lib) do
+    caller = self()
+    spawn(fn -> send(caller, {:result, take_info(lib)}) end)
+  end
+
+  def get_result() do
+    receive do
+      {:result, result} -> 
+        result
+    end
   end
 
   @doc """
@@ -37,15 +44,17 @@ defmodule Extop.Pollster do
     do
       stars = Map.get(ans, "stargazers_count")
       date = Map.get(ans, "pushed_at")                 
-      #changeset = Extop.Library.Changeset(%Extop.Library{})
-      %{lib | stars: stars, commited: date}
+      changeset = Extop.Library.changeset(lib, %{stars: stars, commited: date})
+      Extop.Repo.update!(changeset)
+      #%{lib | stars: stars, commited: date}
     else
       false       ->
         Logger.warn "#{lib.url} is not a Github library"
-        lib
+       # lib
       {:error, _} -> 
         Logger.error "#{lib.url} is unavailable"
-        lib
+       # lib
     end
   end
+
 end

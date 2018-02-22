@@ -14,7 +14,7 @@ defmodule Extop do
       supervisor(Extop.Endpoint, []),
       # Start your own worker by calling: Extop.Worker.start_link(arg1, arg2, arg3)
       # worker(Extop.Worker, [arg1, arg2, arg3]),
-      worker(Extop.Scheduler, [])
+      worker(Extop.Scheduler, []),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

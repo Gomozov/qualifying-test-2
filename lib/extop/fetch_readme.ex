@@ -50,6 +50,10 @@ defmodule Extop.FetchReadme do
   @doc """
     Compares the received SHA and calculated SHA of file.
   """
+  def validate_sha({:error, _}) do
+    Logger.error "Error! Can't validate file!"
+  end
+
   def validate_sha({:ok, %{"content" => content, "size" => size, "sha" => sha}}) do
     file = 
       content
@@ -66,13 +70,7 @@ defmodule Extop.FetchReadme do
     end  
   end
 
-  def validate_file({:ok, body}) do
+  def validate_sha({:ok, _body}) do
     Logger.error "Error! Uncorrect data structure!"
-    IO.inspect body
-  end
-
-  def validate_file({:error, body}) do
-    Logger.error "Error! Can't validate file!"
-    IO.inspect body
   end
 end

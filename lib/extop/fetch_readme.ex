@@ -5,18 +5,18 @@ defmodule Extop.FetchReadme do
   require Logger
 
   @moduledoc """
-  Module that works with Github. 
+  Module that fetchs README.md file. 
   
   Fetches README.md file from H4cc "awersome-elixir" repository. 
   """
   
-  @github_url "https://api.github.com/repos/h4cc/awesome-elixir/readme" 
-  @headers [{"Authorization", "token #{Application.get_env(:extop, :github)[:token]}"}]
+  @github_url  "https://api.github.com/repos/h4cc/awesome-elixir/readme" 
+  @timeouts    [timeout: 10_000, recv_timeout: 10_000]
 
   def fetch() do  
-    Logger.info "Fetching README.md from #{@github_url}"
+    Logger.info "Fetching file README.md from #{@github_url}"
     @github_url
-    |> HTTPoison.get(@headers, [timeout: 10_000, recv_timeout: 10_000])
+    |> HTTPoison.get(Application.get_env(:extop, :github)[:token_header], @timeouts)
     |> Extop.Handler.handle_response
     |> validate_sha
     |> check_db
@@ -24,14 +24,14 @@ defmodule Extop.FetchReadme do
 
   def check_db({sha, size, file}) do #Move to model
     if sha != last_sha() do
-      Logger.info "Write new data to the DB"
+      Logger.info "It's new file README.md"
       Repo.insert(%File{sha: sha, size: size, loaded: Date.to_string(Date.utc_today())})
       file
         |> Extop.Parser.parse_file()
         |> save_libraries
-      Logger.info "Data is saved to the DB"
+      Logger.info "File README.md is saved to the DB"
     else
-      Logger.info "Record is already exist"
+      Logger.info "File README.md already exists in DB"
     end
   end
 

@@ -1,26 +1,19 @@
 defmodule Extop.Pollster do
   require Logger
 
-  @headers [{"Authorization", "token #{Application.get_env(:extop, :github)[:token]}"}]
+  @moduledoc """
+  Parses file to %Extop.Library structure. 
+  """
+
+  @timeouts [timeout: 10_000, recv_timeout: 10_000]
 
   def polling() do
     Logger.info "Start polling"
     Extop.Repo.all(Extop.Library)
      |> Enum.take(5)
-     |> Enum.map(&async_take_info/1)
-     |> Enum.map(fn(_) -> get_result() end)
-  end
-
-  def async_take_info(lib) do
-    caller = self()
-    spawn(fn -> send(caller, {:result, take_info(lib)}) end)
-  end
-
-  def get_result() do
-    receive do
-      {:result, result} -> 
-        result
-    end
+    # |> Enum.map(fn lib -> Task.async(fn -> take_info(lib) end) end)
+     |> Enum.map(&Task.async(fn -> take_info(&1) end))
+     |> Enum.map(&Task.await/1)
   end
 
   @doc """
@@ -31,7 +24,7 @@ defmodule Extop.Pollster do
     url
     |> String.replace_leading("https://github.com", "https://api.github.com/repos")
     |> String.trim_trailing("/")
-    |> HTTPoison.get(@headers, [timeout: 10_000, recv_timeout: 10_000])
+    |> HTTPoison.get(Application.get_env(:extop, :github)[:token_header], @timeouts)
     |> Extop.Handler.handle_response
   end
 
@@ -46,15 +39,11 @@ defmodule Extop.Pollster do
       date = Map.get(ans, "pushed_at")                 
       changeset = Extop.Library.changeset(lib, %{stars: stars, commited: date})
       Extop.Repo.update!(changeset)
-      #%{lib | stars: stars, commited: date}
     else
       false       ->
         Logger.warn "#{lib.url} is not a Github library"
-       # lib
       {:error, _} -> 
         Logger.error "#{lib.url} is unavailable"
-       # lib
     end
   end
-
 end

@@ -2,6 +2,9 @@ defmodule Extop.Scheduler do
   use GenServer
   require Logger
 
+  @moduledoc """
+  Calls Extop.FetchReadme and Extop.Pollster once a day. 
+  """
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end

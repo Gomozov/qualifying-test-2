@@ -2,7 +2,7 @@ defmodule Extop.Pollster do
   require Logger
 
   @moduledoc """
-  Parses file to %Extop.Library structure. 
+  Polls links (Extop.Library.url's) from DB. 
   """
 
   @timeouts [timeout: 10_000, recv_timeout: 10_000]
@@ -11,7 +11,6 @@ defmodule Extop.Pollster do
     Logger.info "Start polling"
     Extop.Repo.all(Extop.Library)
      |> Enum.take(5)
-    # |> Enum.map(fn lib -> Task.async(fn -> take_info(lib) end) end)
      |> Enum.map(&Task.async(fn -> take_info(&1) end))
      |> Enum.map(&Task.await/1)
   end

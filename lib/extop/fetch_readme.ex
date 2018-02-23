@@ -38,7 +38,9 @@ defmodule Extop.FetchReadme do
   def save_libraries(libs) do
     Repo.delete_all(Extop.Library)
     libs
-    |> Enum.map(&Repo.insert(&1))
+      |> Enum.map(&Repo.insert(&1))
+    #  |> changeset = Extop.Library.insert_changeset(%Extop.Library{}, lib)
+    #  Extop.Repo.insert!(changeset)
   end
 
   def last_sha() do   #Move to model

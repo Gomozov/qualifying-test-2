@@ -17,3 +17,6 @@ config :extop, Extop.Repo,
   database: "extop_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :extop, :github, token_header: [{"Authorization", 
+               "token test123456"}]

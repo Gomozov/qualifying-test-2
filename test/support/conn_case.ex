@@ -26,6 +26,7 @@ defmodule Extop.ConnCase do
       import Ecto.Query
 
       import Extop.Router.Helpers
+      import Extop.TestHelpers
 
       # The default endpoint for testing
       @endpoint Extop.Endpoint

@@ -17,4 +17,10 @@ defmodule Extop.Library do
     |> cast(params, ~w(stars commited), [])
     |> validate_required([:stars, :commited])
   end
+
+  def insert_changeset(model, params \\ :invalid) do
+    model
+    |> cast(params, ~w(name url desc folder stars), [])
+    |> validate_required([:name, :url, :desc, :folder])
+  end
 end

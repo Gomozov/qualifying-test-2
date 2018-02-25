@@ -7,5 +7,4 @@ defmodule Extop.File do
     field :loaded,     :string
     timestamps()
   end
-
 end

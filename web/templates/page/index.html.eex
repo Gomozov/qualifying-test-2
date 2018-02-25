@@ -3,17 +3,26 @@
   <p class="lead">Elixir has awesome list: <a href="https://github.com/h4cc/awesome-elixir">h4cc/awesome-elixir</a>. This is a mirror of it where each library is marked with number of stars at <a href="https://github.com">Github</a> and number of days since the last commit.</p>
 </div>
 
-<h4>Libraries</h4>
+<h4>Elixir awesome list</h4>
 
 <table class="table">
-  <%= for library <- @libraries do %>
+  <%= for key <- @keys do %>
     <tr>
-      <td><b><%= library.name %></b> (<%= library.id %>)</td>
-      <td><%= library.url %></td>
-      <td><%= library.desc %></td>
-      <td><%= library.folder %></td>
-      <td><%= library.stars %></td>
-      <td><%= library.commited %></td>
+      <td><b><%= link key, to: "#"<>key %></b></td>
     </tr>
   <% end %>
 </table>
+
+<%= for {key, list} <- @libs do %>
+  <h3 id="<%= key %>"><%= key %></h3>
+  <table class="table">
+    <%= for lib <- list do %>
+      <tr>
+        <td><b><%= link lib.name, to: lib.url %></b></td>
+        <td><%= lib.desc %></td>
+        <td><%= lib.stars %></td>
+        <td><%= lib.commited %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

@@ -23,4 +23,15 @@ defmodule Extop.Library do
     |> cast(params, ~w(name url desc folder stars), [])
     |> validate_required([:name, :url, :desc, :folder])
   end
+
+  def get_libraries(min_stars) do
+    query =
+      case Integer.parse(min_stars) do
+        {int, _str}   -> from lib in Extop.Library, where: lib.stars >= ^int
+        :error        -> Extop.Library
+      end
+    Extop.Repo.all(query)
+    |> Enum.reduce(%{}, fn(lib, acc) -> 
+      Map.merge(acc, %{lib.folder => [lib]}, fn _k, v1, v2 -> List.flatten(v1, v2) end) end)
+  end
 end

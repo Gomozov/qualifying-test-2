@@ -31,7 +31,15 @@ defmodule Extop.Library do
         :error        -> Extop.Library
       end
     Extop.Repo.all(query)
+    |> Enum.map(fn lib -> %{lib | commited: days_passed(lib.commited)} end)
     |> Enum.reduce(%{}, fn(lib, acc) -> 
       Map.merge(acc, %{lib.folder => [lib]}, fn _k, v1, v2 -> List.flatten(v1, v2) end) end)
+  end
+
+  defp days_passed(date) do 
+    case Timex.parse(date, "{ISO:Extended}") do
+      {:ok, result} -> Timex.diff(Timex.now, result, :days)
+      {:error, _}   -> ""
+    end
   end
 end

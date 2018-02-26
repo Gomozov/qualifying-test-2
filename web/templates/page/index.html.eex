@@ -1,6 +1,6 @@
 <div class="jumbotron">
   <h3>EliXir TOP list</h3>
-  <p class="lead">Elixir has awesome list: <a href="https://github.com/h4cc/awesome-elixir">h4cc/awesome-elixir</a>. This is a mirror of it where each library is marked with number of stars at <a href="https://github.com">Github</a> and number of days since the last commit.</p>
+  <p class="lead">This is a mirror of elixir awesome list: <a href="https://github.com/h4cc/awesome-elixir">h4cc/awesome-elixir</a>. <br>Libraries, resources, and shiny things are marked with number of stars and days passed since the last commit.</p>
 </div>
 
 <h4>Elixir awesome list</h4>

@@ -24,4 +24,11 @@ defmodule Extop.LibraryTest do
     changeset = Library.changeset(%Library{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+#  test "check days_passed function with correct data" do 
+#    now = Timex.format!(Timex.now, "{ISO:Extended}")
+#    yesterday = Timex.add(now, %Timex.Duration{megaseconds: 0, seconds: -86401, microseconds: 0})
+#    days_passed(yesterday)
+#    assert "1"
+#  end
 end

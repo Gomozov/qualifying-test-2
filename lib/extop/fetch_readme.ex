@@ -1,5 +1,4 @@
 defmodule Extop.FetchReadme do
-  import Ecto.Query
   alias Extop.Repo
   alias Extop.File
   require Logger
@@ -23,7 +22,7 @@ defmodule Extop.FetchReadme do
   end
 
   def check_db({sha, size, file}) do #Move to model
-    if sha != last_sha() do
+    if sha != File.last_sha() do
       Logger.info "It's new file README.md"
       Repo.insert(%File{sha: sha, size: size, loaded: Date.to_string(Date.utc_today())})
       file
@@ -41,12 +40,6 @@ defmodule Extop.FetchReadme do
       |> Enum.map(&Repo.insert(&1))
     #  |> changeset = Extop.Library.insert_changeset(%Extop.Library{}, lib)
     #  Extop.Repo.insert!(changeset)
-  end
-
-  def last_sha() do   #Move to model
-    from(d in File, limit: 1, order_by: [desc: d.inserted_at])
-    |> (&Repo.one(&1) || %{}).()
-    |> Map.get(:sha)
   end
 
   @doc """

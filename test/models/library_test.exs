@@ -1,9 +1,16 @@
 defmodule Extop.LibraryTest do
   use Extop.ModelCase, async: true 
+  import Extop.TestHelpers
   alias Extop.Library
 
   @valid_attrs %{name: "Library", url: "https://url.com", desc: "Description", folder: "Test"}
-  @invalid_attrs %{}
+
+  setup do
+    first_lib  = insert_library(name: "First library", stars: 5, folder: "Test 1")
+    second_lib = insert_library(name: "Second library", stars: nil, folder: "Test 2")
+    third_lib  = insert_library(name: "Third library", stars: 10, folder: "Test 3")
+    {:ok, one: first_lib, two: second_lib, three: third_lib}
+  end
 
   test "insert_changeset with valid attributes" do 
     changeset = Library.insert_changeset(%Library{}, @valid_attrs)
@@ -11,7 +18,7 @@ defmodule Extop.LibraryTest do
   end
 
   test "insert_changeset with invalid attributes" do 
-    changeset = Library.insert_changeset(%Library{}, @invalid_attrs)
+    changeset = Library.insert_changeset(%Library{}, %{})
     refute changeset.valid?
   end
 
@@ -21,14 +28,34 @@ defmodule Extop.LibraryTest do
   end
 
   test "changeset with invalid attributes" do 
-    changeset = Library.changeset(%Library{}, @invalid_attrs)
+    changeset = Library.changeset(%Library{}, %{})
     refute changeset.valid?
   end
 
-#  test "check days_passed function with correct data" do 
-#    now = Timex.format!(Timex.now, "{ISO:Extended}")
-#    yesterday = Timex.add(now, %Timex.Duration{megaseconds: 0, seconds: -86401, microseconds: 0})
-#    days_passed(yesterday)
-#    assert "1"
-#  end
+  test "check days_passed function with correct data" do 
+    now = Timex.format!(Timex.now, "{ISO:Extended}")
+    yesterday = Timex.add(now, %Timex.Duration{megaseconds: 0, seconds: -86401, microseconds: 0})
+    Library.days_passed(yesterday)
+    assert "1"
+  end
+
+  test "check days_passed function with uncorrect data" do
+    Library.days_passed("Error")
+    assert ""
+  end
+
+  test "check get_libraries with correct min_stars" do
+    libs = Library.get_libraries("5")  
+    assert Map.has_key?(libs, "Test 1") 
+    assert Map.has_key?(libs, "Test 3") 
+    refute Map.has_key?(libs, "Test 2") 
+  end
+
+  test "check get_libraries with uncorrect min_stars" do
+    libs = Library.get_libraries("error")  
+    assert Map.has_key?(libs, "Test 1") 
+    assert Map.has_key?(libs, "Test 3") 
+    assert Map.has_key?(libs, "Test 2") 
+  end
+
 end

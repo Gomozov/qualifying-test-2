@@ -8,7 +8,7 @@ defmodule Extop.Pollster do
   @timeouts [timeout: 10_000, recv_timeout: 10_000]
 
   def polling() do
-    Logger.info "Start polling"
+    Logger.info "Start polling libraries"
     Extop.Repo.all(Extop.Library)
      |> Enum.take(5)
      |> Enum.map(&Task.async(fn -> take_info(&1) end))

@@ -6,7 +6,7 @@ defmodule Extop.PageController do
     libs = Extop.Library.get_libraries(min_stars)
     keys = Map.keys(libs) |> Enum.sort
     conn
-    |> assign(:libs, libs)
+    |> assign(:libs, libs |> Enum.sort)
     |> assign(:keys, keys)
     |> render("index.html")
   end

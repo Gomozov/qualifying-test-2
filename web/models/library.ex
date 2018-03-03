@@ -36,7 +36,7 @@ defmodule Extop.Library do
       Map.merge(acc, %{lib.folder => [lib]}, fn _k, v1, v2 -> List.flatten(v1, v2) end) end)
   end
 
-  defp days_passed(date) do 
+  def days_passed(date) do 
     case Timex.parse(date, "{ISO:Extended}") do
       {:ok, result} -> Timex.diff(Timex.now, result, :days)
       {:error, _}   -> ""

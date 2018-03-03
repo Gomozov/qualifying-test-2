@@ -14,14 +14,17 @@
 </table>
 
 <%= for {key, list} <- @libs do %>
-  <h3 id="<%= key %>"><%= key %></h3>
+  <tr>
+    <td><h3 id="<%= key %>"><%= key %></h3></td>
+    <td><%= link "⭡", to: "#" %></td>
+  </tr>
   <table class="table">
     <%= for lib <- list do %>
       <tr>
         <td><b><%= link lib.name, to: lib.url %></b></td>
         <td><%= lib.desc %></td>
-        <td><%= lib.stars %></td>
-        <td><%= lib.commited %></td>
+        <td>⭐<%= lib.stars %></td>
+        <td>🗓<%= lib.commited %></td>
       </tr>
     <% end %>
   </table>

@@ -14,4 +14,16 @@ defmodule Extop.TestHelpers do
     |> Extop.Library.insert_changeset(changes)
     |> Repo.insert!()
   end
+
+  def insert_file(attrs \\ %{}) do
+    changes = Dict.merge(%{
+      sha:    "TestTestTest",
+      size:   1000,
+      loaded: "SomeDate"
+    }, attrs)
+
+    %Extop.File{}
+    |> Extop.File.changeset(changes)
+    |> Repo.insert!()
+  end
 end

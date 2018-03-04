@@ -10,9 +10,10 @@ defmodule Extop.Pollster do
   def polling() do
     Logger.info "Start polling libraries"
     Extop.Repo.all(Extop.Library)
-   #  |> Enum.take(1)
+     |> Enum.take(100)
      |> Enum.map(&Task.async(fn -> take_info(&1, &1.is_git) end))
-     |> Enum.map(&Task.await(&1, 10000))
+ #    |> Enum.map(&Task.await(&1, 10000))
+     |> Task.yield_many(10000)
   end
 
   def take_info(lib, true) do
@@ -23,7 +24,7 @@ defmodule Extop.Pollster do
       changeset = Extop.Library.changeset(lib, %{stars: stars, commited: date})
       Extop.Repo.update!(changeset)
     else
-      {:error, _} -> Logger.error "#{lib.url} is unavailable"
+      {:error, reason} -> Logger.error "#{lib.url} is unavailable. Reason: #{reason}"
     end
   end
 
@@ -35,7 +36,7 @@ defmodule Extop.Pollster do
       Extop.Repo.update!(changeset)
       Logger.warn "Commited: #{date},for #{lib.url} updated"
     else
-      {:error, _}  -> Logger.error "#{lib.url} is unavailable"
+      {:error, reason}  -> Logger.error "#{lib.url} is unavailable. Reason: #{reason}"
       {:processed} -> ""
     end
   end
@@ -45,7 +46,7 @@ defmodule Extop.Pollster do
     url
     |> String.replace_leading("https://github.com", "https://api.github.com/repos")
     |> String.trim_trailing("/")
-    |> HTTPoison.get(Application.get_env(:extop, :github)[:token_header], @timeouts)
+    |> HTTPoison.get([{"Authorization", "token #{Application.get_env(:extop, :github)[:token_header]}"}], @timeouts)
     |> Extop.Handler.handle_response
   end
 

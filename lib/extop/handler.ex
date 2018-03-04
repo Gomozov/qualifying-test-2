@@ -14,7 +14,7 @@ defmodule Extop.Handler do
     body
     |> Poison.Parser.parse!()
     |> Map.get("url")
-    |> HTTPoison.get(Application.get_env(:extop, :github)[:token_header])
+    |> HTTPoison.get([{"Authorization", "token #{Application.get_env(:extop, :github)[:token_header]}"}])
     |> handle_response
   end
 

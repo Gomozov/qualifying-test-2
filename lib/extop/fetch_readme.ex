@@ -21,7 +21,7 @@ defmodule Extop.FetchReadme do
     |> check_db
   end
 
-  def check_db({sha, size, file}) do #Move to model
+  def check_db({:ok, {sha, size, file}}) do
     if sha != File.last_sha() do
       Logger.info "It's new file README.md"
       Repo.insert(%File{sha: sha, size: size, loaded: Date.to_string(Date.utc_today())})
@@ -32,6 +32,10 @@ defmodule Extop.FetchReadme do
     else
       Logger.info "File README.md already exists in DB"
     end
+  end
+
+  def check_db({:error, reason}) do
+    Logger.error "Error! Reason: #{reason}"
   end
 
   def save_libraries(libs) do
@@ -46,7 +50,7 @@ defmodule Extop.FetchReadme do
     Compares the received SHA and calculated SHA of file.
   """
   def validate_sha({:error, _}) do
-    Logger.error "Error! Can't validate file!"
+    {:error, "Handle response error"}
   end
 
   def validate_sha({:ok, %{"content" => content, "size" => size, "sha" => sha}}) do
@@ -59,13 +63,14 @@ defmodule Extop.FetchReadme do
       |> String.downcase
     if sha_calc == sha do
       Logger.info "SHA equal #{sha}"
-      {sha, size, file}    
+      {:ok, {sha, size, file}}    
     else
       Logger.warn "SHA not equal! #{sha_calc} and #{sha}"
+      {:error, "Integrity violation"}
     end  
   end
 
   def validate_sha({:ok, _body}) do
-    Logger.error "Error! Uncorrect data structure!"
+    {:error, "Uncorrect data structure"}
   end
 end

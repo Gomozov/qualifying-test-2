@@ -15,7 +15,7 @@ defmodule Extop.Library do
   def changeset(model, params \\ :invalid) do
     model
     |> cast(params, ~w(stars commited), [])
-    |> validate_required([:stars, :commited])
+    |> validate_required([:commited])
   end
 
   def insert_changeset(model, params \\ :invalid) do

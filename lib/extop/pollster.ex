@@ -10,15 +10,37 @@ defmodule Extop.Pollster do
   def polling() do
     Logger.info "Start polling libraries"
     Extop.Repo.all(Extop.Library)
-     |> Enum.take(5)
-     |> Enum.map(&Task.async(fn -> take_info(&1) end))
-     |> Enum.map(&Task.await/1)
+   #  |> Enum.take(1)
+     |> Enum.map(&Task.async(fn -> take_info(&1, &1.is_git) end))
+     |> Enum.map(&Task.await(&1, 10000))
   end
 
-  @doc """
-    Returns JSON information about ropository by it URL.
-  """
-  def get_url(url) do
+  def take_info(lib, true) do
+    with {:ok, ans} <- get_git_url(lib.url)
+    do
+      stars = Map.get(ans, "stargazers_count")
+      date = Map.get(ans, "pushed_at")                 
+      changeset = Extop.Library.changeset(lib, %{stars: stars, commited: date})
+      Extop.Repo.update!(changeset)
+    else
+      {:error, _} -> Logger.error "#{lib.url} is unavailable"
+    end
+  end
+
+  def take_info(lib, false) do
+    with {:ok, ans} <- get_hex_url(lib.url)
+    do
+      date = Map.get(ans, "updated_at")                 
+      changeset = Extop.Library.changeset(lib, %{commited: date})
+      Extop.Repo.update!(changeset)
+      Logger.warn "Commited: #{date},for #{lib.url} updated"
+    else
+      {:error, _}  -> Logger.error "#{lib.url} is unavailable"
+      {:processed} -> ""
+    end
+  end
+
+  def get_git_url(url) do
     Logger.info "Fetching info from #{url}"
     url
     |> String.replace_leading("https://github.com", "https://api.github.com/repos")
@@ -27,22 +49,16 @@ defmodule Extop.Pollster do
     |> Extop.Handler.handle_response
   end
 
-  @doc """
-    Returns updated lib with actual information about number of stars and date of last commit.
-  """
-  def take_info(lib) do
-    with true       <- lib.is_git,
-         {:ok, ans} <- get_url(lib.url)
-    do
-      stars = Map.get(ans, "stargazers_count")
-      date = Map.get(ans, "pushed_at")                 
-      changeset = Extop.Library.changeset(lib, %{stars: stars, commited: date})
-      Extop.Repo.update!(changeset)
+  def get_hex_url(url) do
+    if String.contains?(url, "hex.pm/pack") do
+      Logger.info "Fetching info from #{url}"
+      url
+      |> String.replace_leading("https://hex.pm/pack", "https://hex.pm/api/pack")
+      |> HTTPoison.get(@timeouts)
+      |> Extop.Handler.handle_response
     else
-      false       ->
-        Logger.warn "#{lib.url} is not a Github library"
-      {:error, _} -> 
-        Logger.error "#{lib.url} is unavailable"
+      Logger.warn "#{url} is not a Github or Hex library"
+      {:processed}
     end
   end
 end

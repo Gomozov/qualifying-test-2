@@ -14,10 +14,7 @@
 </table>
 
 <%= for {key, list} <- @libs do %>
-  <tr>
-    <td><h3 id="<%= key %>"><%= key %></h3></td>
-    <td><%= link "⭡", to: "#" %></td>
-  </tr>
+  <h3 id="<%= key %>"><%= key %> <%= link "  ↑", to: "#" %></h3>
   <table class="table">
     <%= for lib <- list do %>
       <tr>

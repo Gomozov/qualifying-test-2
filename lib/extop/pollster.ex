@@ -10,7 +10,7 @@ defmodule Extop.Pollster do
   def polling() do
     Logger.info "Start polling libraries"
     Extop.Repo.all(Extop.Library)
-    # |> Enum.take(10)
+     |> Enum.take(10)
      |> Enum.map(&Task.async(fn -> take_info(&1, &1.is_git) end))
  #    |> Enum.map(&Task.await(&1, 10000))
      |> Task.yield_many(10000)
@@ -41,7 +41,7 @@ defmodule Extop.Pollster do
   end
 
   def get_git_url(url) do
-    #Logger.info "Fetching info from #{url}"
+    Logger.info "Fetching info from #{url}"
     url
     |> String.replace_leading("https://github.com", "https://api.github.com/repos")
     |> String.trim_trailing("/")
@@ -52,7 +52,7 @@ defmodule Extop.Pollster do
 
   def get_hex_url(url) do
     if String.contains?(url, "hex.pm/pack") do
-     # Logger.info "Fetching info from #{url}"
+      Logger.info "Fetching info from #{url}"
       url
       |> String.replace_leading("https://hex.pm/pack", "https://hex.pm/api/pack")
       |> HTTPoison.get(@timeouts)

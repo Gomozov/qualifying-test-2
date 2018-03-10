@@ -17,12 +17,7 @@
   <h3 id="<%= key %>"><%= key %> <%= link "  ↑", to: "#" %></h3>
   <table class="table">
     <%= for lib <- list do %>
-      <tr>
-        <td><b><%= link lib.name, to: lib.url %></b></td>
-        <td><%= lib.desc %></td>
-        <td>⭐<%= lib.stars %></td>
-        <td>🗓<%= lib.commited %></td>
-      </tr>
+      <%= render Extop.PageView, "_library.html", lib: lib %>
     <% end %>
   </table>
 <% end %>

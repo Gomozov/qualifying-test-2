@@ -39,7 +39,7 @@ defmodule Extop.Library do
   def days_passed(date) do 
     case Timex.parse(date, "{ISO:Extended}") do
       {:ok, result} -> Timex.diff(Timex.now, result, :days)
-      {:error, _}   -> ""
+      {:error, _}   -> nil
     end
   end
 end

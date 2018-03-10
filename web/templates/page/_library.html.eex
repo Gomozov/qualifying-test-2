@@ -1,0 +1,14 @@
+<tr>
+  <td><b><%= link @lib.name, to: @lib.url %></b></td>
+  <td><%= @lib.desc %></td>
+    <td nowrap>
+      <%= if @lib.stars do %>
+        ⭐<%= @lib.stars %> 
+      <% end %>
+    </td>
+  <td nowrap>
+    <%= if @lib.commited do %>
+      🗓<%= @lib.commited %> 
+    <% end %>
+  </td>
+</tr>

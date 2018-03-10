@@ -19,12 +19,10 @@ defmodule Extop.Handler do
   end
 
   def handle_response({ _, %{status_code: status, body: _body}}) do
-    Logger.error "Error #{status} returned"
     {:error, status}
   end
   
   def handle_response({ :error, %{reason: reason}}) do
-    Logger.error "Error: #{reason}"
     {:error, reason}
   end
 end

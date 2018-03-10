@@ -21,7 +21,7 @@ defmodule Extop.Parser do
   end
   
   def parse_str(str, key) do
-    {str, %Extop.Library{folder: key}}
+    {str, %{folder: key, name: "", url: "", desc: "", is_git: false}}
     |> get_name()
     |> get_url()
     |> get_desc()

@@ -12,7 +12,6 @@ defmodule Extop.Pollster do
     Extop.Repo.all(Extop.Library)
      |> Enum.take(10)
      |> Enum.map(&Task.async(fn -> take_info(&1, &1.is_git) end))
- #    |> Enum.map(&Task.await(&1, 10000))
      |> Task.yield_many(10000)
   end
 

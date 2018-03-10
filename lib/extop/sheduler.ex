@@ -15,8 +15,10 @@ defmodule Extop.Scheduler do
   end
 
   def handle_info(:work, state) do
-    Extop.FetchReadme.fetch()
-    Extop.Pollster.polling()
+    if !Application.get_env(:extop, :sql_sandbox) do
+      Extop.FetchReadme.fetch()
+      Extop.Pollster.polling()
+    end
     schedule_work()
     {:noreply, state}
   end

@@ -24,6 +24,14 @@ defmodule Extop.Library do
     |> validate_required([:name, :url, :desc, :folder])
   end
 
+  def save_libraries(libs) do
+    Extop.Repo.delete_all(Extop.Library)
+    libs
+      |> Enum.map(&Extop.Library.insert_changeset(%Extop.Library{}, &1))
+      |> Enum.filter(&(&1.valid?))
+      |> Enum.map(&Extop.Repo.insert!(&1))
+  end
+
   def get_libraries(min_stars) do
     query =
       case Integer.parse(min_stars) do

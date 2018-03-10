@@ -1,6 +1,10 @@
 defmodule Extop.Endpoint do
   use Phoenix.Endpoint, otp_app: :extop
 
+  if Application.get_env(:extop, :sql_sandbox) do
+    plug Phoenix.Ecto.SQL.Sandbox
+  end
+
   socket "/socket", Extop.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.

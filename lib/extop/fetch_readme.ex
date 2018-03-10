@@ -27,7 +27,7 @@ defmodule Extop.FetchReadme do
       Repo.insert(%File{sha: sha, size: size, loaded: Date.to_string(Date.utc_today())})
       file
         |> Extop.Parser.parse_file()
-        |> save_libraries
+        |> Extop.Library.save_libraries()
       Logger.info "File README.md is saved to the DB"
     else
       Logger.info "File README.md already exists in DB"
@@ -36,14 +36,6 @@ defmodule Extop.FetchReadme do
 
   def check_db({:error, reason}) do
     Logger.error "Error! Reason: #{reason}"
-  end
-
-  def save_libraries(libs) do
-    Repo.delete_all(Extop.Library)
-    libs
-      |> Enum.map(&Repo.insert(&1))
-    #  |> changeset = Extop.Library.insert_changeset(%Extop.Library{}, lib)
-    #  Extop.Repo.insert!(changeset)
   end
 
   @doc """

@@ -11,6 +11,20 @@ defmodule Extop.LibraryTest do
     third_lib  = insert_library(name: "Third library", stars: 10, folder: "Test 3")
     {:ok, one: first_lib, two: second_lib, three: third_lib}
   end
+ 
+  test "save_libraries with all valid libs" do
+    libs = [%{name: "Name1", url: "URL1", desc: "Desc1", is_git: false, folder: "Folder"},
+            %{name: "Name2", url: "URL2", desc: "Desc2", is_git: false, folder: "Folder"}]
+    Library.save_libraries(libs)
+    assert length(Extop.Repo.all(Extop.Library)) == 2  
+  end
+
+  test "save_libraries with one invalid lib" do
+    libs = [%{name: "Name1", url: "URL1", desc: "Desc1", is_git: false, folder: "Folder"},
+            %{url: "URL2", desc: "Desc2", is_git: false, folder: "Folder"}]
+    Library.save_libraries(libs)
+    assert length(Extop.Repo.all(Extop.Library)) == 1 
+  end
 
   test "insert_changeset with valid attributes" do 
     changeset = Library.insert_changeset(%Library{}, @valid_attrs)

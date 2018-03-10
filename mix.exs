@@ -10,7 +10,10 @@ defmodule Extop.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [
+        vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test
+      ]
     ]
   end
 
@@ -37,7 +40,8 @@ defmodule Extop.Mixfile do
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.9" },
       {:poison, "~> 2.2"},
-      {:timex, "~> 3.1"}
+      {:timex, "~> 3.1"},
+      {:exvcr, "~> 0.10", only: :test}
     ]
   end
 

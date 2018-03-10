@@ -1,4 +1,5 @@
 use Mix.Config
+  import_config "test.secret.exs"
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
@@ -9,6 +10,8 @@ config :extop, Extop.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :extop, sql_sandbox: true
+
 # Configure your database
 config :extop, Extop.Repo,
   adapter: Ecto.Adapters.Postgres,
@@ -17,5 +20,3 @@ config :extop, Extop.Repo,
   database: "extop_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
-
-config :extop, :github, token_header: "test123456"

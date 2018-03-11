@@ -1,0 +1,37 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "timeout": "10000",
+        "recv_timeout": "10000"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://hex.pm/api/packages/data_morph"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"url\":\"https://hex.pm/api/packages/data_morph\",\"updated_at\":\"2017-03-19T21:18:31.231177Z\",\"retirements\":{},\"repository\":\"hexpm\",\"releases\":[{\"version\":\"0.0.6\",\"url\":\"https://hex.pm/api/packages/data_morph/releases/0.0.6\"},{\"version\":\"0.0.5\",\"url\":\"https://hex.pm/api/packages/data_morph/releases/0.0.5\"},{\"version\":\"0.0.4\",\"url\":\"https://hex.pm/api/packages/data_morph/releases/0.0.4\"},{\"version\":\"0.0.3\",\"url\":\"https://hex.pm/api/packages/data_morph/releases/0.0.3\"},{\"version\":\"0.0.2\",\"url\":\"https://hex.pm/api/packages/data_morph/releases/0.0.2\"},{\"version\":\"0.0.1\",\"url\":\"https://hex.pm/api/packages/data_morph/releases/0.0.1\"}],\"owners\":[{\"username\":\"robmckinnon\",\"url\":\"https://hex.pm/api/users/robmckinnon\",\"email\":\"rob@movingflow.co.uk\"}],\"name\":\"data_morph\",\"meta\":{\"maintainers\":[\"Rob McKinnon\"],\"links\":{\"github\":\"https://github.com/robmckinnon/data_morph\"},\"licenses\":[\"MIT\"],\"description\":\"Create Elixir structs, maps with atom keys, and keyword lists from CSV/TSV data.\"},\"inserted_at\":\"2016-08-01T22:46:03.015867Z\",\"html_url\":\"https://hex.pm/packages/data_morph\",\"downloads\":{\"recent\":20,\"all\":625},\"docs_html_url\":\"https://hexdocs.pm/data_morph/\"}",
+      "headers": {
+        "Connection": "keep-alive",
+        "Server": "Cowboy",
+        "Date": "Sun, 11 Mar 2018 18:52:58 GMT",
+        "Content-Length": "1164",
+        "Content-Type": "application/vnd.hex+json; charset=utf-8",
+        "Cache-Control": "public, max-age=60",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Ratelimit-Limit": "100",
+        "X-Ratelimit-Remaining": "98",
+        "X-Ratelimit-Reset": "1520794380",
+        "Etag": "75146ec16329136742d056c965326cc8",
+        "Last-Modified": "Sun, 19 Mar 2017 21:18:31 GMT",
+        "Vary": "accept, accept-encoding, accept-encoding",
+        "Via": "1.1 vegur"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

@@ -1,0 +1,49 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "Authorization": "*****"
+      },
+      "method": "get",
+      "options": {
+        "recv_timeout": 10000,
+        "connect_timeout": 10000
+      },
+      "request_body": "",
+      "url": "https://api.github.com/repos/edgurgel/httpoison"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"id\":12750103,\"name\":\"httpoison\",\"full_name\":\"edgurgel/httpoison\",\"owner\":{\"login\":\"edgurgel\",\"id\":30873,\"avatar_url\":\"https://avatars0.githubusercontent.com/u/30873?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/edgurgel\",\"html_url\":\"https://github.com/edgurgel\",\"followers_url\":\"https://api.github.com/users/edgurgel/followers\",\"following_url\":\"https://api.github.com/users/edgurgel/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/edgurgel/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/edgurgel/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/edgurgel/subscriptions\",\"organizations_url\":\"https://api.github.com/users/edgurgel/orgs\",\"repos_url\":\"https://api.github.com/users/edgurgel/repos\",\"events_url\":\"https://api.github.com/users/edgurgel/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/edgurgel/received_events\",\"type\":\"User\",\"site_admin\":false},\"private\":false,\"html_url\":\"https://github.com/edgurgel/httpoison\",\"description\":\"Yet Another HTTP client for Elixir powered by hackney\",\"fork\":false,\"url\":\"https://api.github.com/repos/edgurgel/httpoison\",\"forks_url\":\"https://api.github.com/repos/edgurgel/httpoison/forks\",\"keys_url\":\"https://api.github.com/repos/edgurgel/httpoison/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/edgurgel/httpoison/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/edgurgel/httpoison/teams\",\"hooks_url\":\"https://api.github.com/repos/edgurgel/httpoison/hooks\",\"issue_events_url\":\"https://api.github.com/repos/edgurgel/httpoison/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/edgurgel/httpoison/events\",\"assignees_url\":\"https://api.github.com/repos/edgurgel/httpoison/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/edgurgel/httpoison/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/edgurgel/httpoison/tags\",\"blobs_url\":\"https://api.github.com/repos/edgurgel/httpoison/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/edgurgel/httpoison/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/edgurgel/httpoison/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/edgurgel/httpoison/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/edgurgel/httpoison/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/edgurgel/httpoison/languages\",\"stargazers_url\":\"https://api.github.com/repos/edgurgel/httpoison/stargazers\",\"contributors_url\":\"https://api.github.com/repos/edgurgel/httpoison/contributors\",\"subscribers_url\":\"https://api.github.com/repos/edgurgel/httpoison/subscribers\",\"subscription_url\":\"https://api.github.com/repos/edgurgel/httpoison/subscription\",\"commits_url\":\"https://api.github.com/repos/edgurgel/httpoison/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/edgurgel/httpoison/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/edgurgel/httpoison/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/edgurgel/httpoison/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/edgurgel/httpoison/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/edgurgel/httpoison/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/edgurgel/httpoison/merges\",\"archive_url\":\"https://api.github.com/repos/edgurgel/httpoison/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/edgurgel/httpoison/downloads\",\"issues_url\":\"https://api.github.com/repos/edgurgel/httpoison/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/edgurgel/httpoison/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/edgurgel/httpoison/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/edgurgel/httpoison/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/edgurgel/httpoison/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/edgurgel/httpoison/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/edgurgel/httpoison/deployments\",\"created_at\":\"2013-09-11T07:21:25Z\",\"updated_at\":\"2018-03-11T10:22:10Z\",\"pushed_at\":\"2018-02-25T20:45:39Z\",\"git_url\":\"git://github.com/edgurgel/httpoison.git\",\"ssh_url\":\"git@github.com:edgurgel/httpoison.git\",\"clone_url\":\"https://github.com/edgurgel/httpoison.git\",\"svn_url\":\"https://github.com/edgurgel/httpoison\",\"homepage\":\"https://hex.pm/packages/httpoison\",\"size\":250,\"stargazers_count\":1269,\"watchers_count\":1269,\"language\":\"Elixir\",\"has_issues\":true,\"has_projects\":true,\"has_downloads\":true,\"has_wiki\":true,\"has_pages\":false,\"forks_count\":219,\"mirror_url\":null,\"archived\":false,\"open_issues_count\":50,\"license\":{\"key\":\"mit\",\"name\":\"MIT License\",\"spdx_id\":\"MIT\",\"url\":\"https://api.github.com/licenses/mit\"},\"forks\":219,\"open_issues\":50,\"watchers\":1269,\"default_branch\":\"master\",\"permissions\":{\"admin\":false,\"push\":false,\"pull\":true},\"network_count\":219,\"subscribers_count\":21}",
+      "headers": {
+        "Server": "GitHub.com",
+        "Date": "Sun, 11 Mar 2018 18:52:45 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "4933",
+        "Status": "200 OK",
+        "X-RateLimit-Limit": "5000",
+        "X-RateLimit-Remaining": "4979",
+        "X-RateLimit-Reset": "1520797179",
+        "Cache-Control": "private, max-age=60, s-maxage=60",
+        "Vary": "Accept, Authorization, Cookie, X-GitHub-OTP",
+        "ETag": "\"46a62a722397a7aa25d1688005fa338e\"",
+        "Last-Modified": "Sun, 11 Mar 2018 10:22:10 GMT",
+        "X-OAuth-Scopes": "",
+        "X-Accepted-OAuth-Scopes": "repo",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "Access-Control-Expose-Headers": "ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Security-Policy": "default-src 'none'",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Runtime-rack": "0.056332",
+        "X-GitHub-Request-Id": "B133:2EEC:4EA7B03:9CF1CB3:5AA57AFB"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

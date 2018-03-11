@@ -20,3 +20,11 @@ config :extop, Extop.Repo,
   database: "extop_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :exvcr, [
+  filter_sensitive_data: [
+    [pattern: "token [0-9a-z]+", placeholder: "*****"]
+  ],
+  filter_url_params: false,
+  response_headers_blacklist: ["Set-Cookie", "X-Request-Id"]
+]

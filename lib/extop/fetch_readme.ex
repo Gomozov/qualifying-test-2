@@ -15,7 +15,8 @@ defmodule Extop.FetchReadme do
   def fetch() do  
     Logger.info "Fetching file README.md from #{@github_url}"
     @github_url
-    |> HTTPoison.get([{"Authorization", "token #{Application.get_env(:extop, :github)[:token_header]}"}], @timeouts)
+    |> HTTPoison.get([{"Authorization", 
+         "token #{Application.get_env(:extop, :github)[:token_header]}"}], @timeouts)
     |> Extop.Handler.handle_response
     |> validate_sha
     |> check_db

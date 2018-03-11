@@ -10,9 +10,18 @@ defmodule Extop.Pollster do
   def polling() do
     Logger.info "Start polling libraries"
     Extop.Repo.all(Extop.Library)
-     |> Enum.take(10)
+     |> take_several_for_test()
      |> Enum.map(&Task.async(fn -> take_info(&1, &1.is_git) end))
      |> Task.yield_many(10000)
+  end
+
+  def take_several_for_test(libs) do
+    case Application.get_env(:extop, :env) do
+      ":dev"    ->  Enum.take(libs, 10)
+      ":test"   ->  Enum.take(libs, 3)
+      ":prod"   ->  libs
+      _         ->  Enum.take(libs, 10)
+    end
   end
 
   def take_info(lib, true) do

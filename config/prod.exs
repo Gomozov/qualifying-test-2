@@ -24,6 +24,7 @@ config :extop, :github, token_header: Map.fetch!(System.get_env(), "TOKEN_HEADER
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :extop, production: true
 # Configure your database
 config :extop, Extop.Repo,
   adapter: Ecto.Adapters.Postgres,

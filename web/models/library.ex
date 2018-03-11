@@ -20,8 +20,8 @@ defmodule Extop.Library do
 
   def insert_changeset(model, params \\ :invalid) do
     model
-    |> cast(params, ~w(name url desc folder stars), [])
-    |> validate_required([:name, :url, :desc, :folder])
+    |> cast(params, ~w(name url desc folder stars is_git), [])
+    |> validate_required([:name, :url, :desc, :folder, :is_git])
   end
 
   def save_libraries(libs) do

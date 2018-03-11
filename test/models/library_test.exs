@@ -3,7 +3,8 @@ defmodule Extop.LibraryTest do
   import Extop.TestHelpers
   alias Extop.Library
 
-  @valid_attrs %{name: "Library", url: "https://url.com", desc: "Description", folder: "Test"}
+  @valid_attrs %{name: "Library", url: "https://url.com", 
+                 desc: "Description", folder: "Test", is_git: false}
 
   setup do
     first_lib  = insert_library(name: "First library", stars: 5, folder: "Test 1")
@@ -71,5 +72,4 @@ defmodule Extop.LibraryTest do
     assert Map.has_key?(libs, "Test 3") 
     assert Map.has_key?(libs, "Test 2") 
   end
-
 end

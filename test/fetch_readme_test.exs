@@ -1,11 +1,12 @@
 defmodule FetchReadmeTest do
-  use Extop.ModelCase   #, async: false
+  use Extop.ModelCase 
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
   import Extop.TestHelpers
 
   setup context do
     if context[:key] do
-      test_file = insert_file(sha: "4632e068d5889f042fe2d9254a9295e5f31a26c7", size: 6, loaded: "TestDate")
+      test_file = insert_file(sha: "4632e068d5889f042fe2d9254a9295e5f31a26c7", 
+                                                   size: 6, loaded: "TestDate")
       {:ok, test_file: test_file}
     else
       :ok
@@ -17,7 +18,6 @@ defmodule FetchReadmeTest do
     HTTPoison.start
     use_cassette "fetch correct data" do
       Extop.FetchReadme.fetch()
-      IO.inspect length(Extop.Repo.all(Extop.Library))
       assert length(Extop.Repo.all(Extop.File)) == 2 
       assert length(Extop.Repo.all(Extop.Library)) > 1000  
     end

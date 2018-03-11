@@ -5,6 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
+config :extop, env: Mix.env
+
 # General application configuration
 config :extop,
   ecto_repos: [Extop.Repo]

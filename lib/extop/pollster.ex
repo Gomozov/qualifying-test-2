@@ -17,10 +17,10 @@ defmodule Extop.Pollster do
 
   def take_several_for_test(libs) do
     case Application.get_env(:extop, :env) do
-      ":dev"    ->  Enum.take(libs, 10)
-      ":test"   ->  Enum.take(libs, 3)
-      ":prod"   ->  libs
-      _         ->  Enum.take(libs, 10)
+      :dev    ->  Enum.take(libs, 10)
+      :test   ->  Enum.take(libs, 3)
+      :prod   ->  libs
+      _       ->  Enum.take(libs, 1)
     end
   end
 

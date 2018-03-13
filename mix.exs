@@ -11,8 +11,11 @@ defmodule Extop.Mixfile do
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
-        vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test
+        vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test,
+        "coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, 
+        "coveralls.html": :test
       ]
     ]
   end
@@ -41,7 +44,8 @@ defmodule Extop.Mixfile do
       {:httpoison, "~> 0.9" },
       {:poison, "~> 2.2"},
       {:timex, "~> 3.1"},
-      {:exvcr, "~> 0.10", only: :test}
+      {:exvcr, "~> 0.10", only: :test},
+      {:excoveralls, "~> 0.8", only: :test}
     ]
   end
 

@@ -23,6 +23,16 @@ defmodule PollsterTest do
     {:ok, lib_test: lib_test}
   end
 
+  test "get_git_url function with redirection" do
+    use_cassette "get_git_url with redirection" do
+      {:ok, ans} = Extop.Pollster.get_git_url("https://github.com/ericmj/mongodb")
+      stars = Map.get(ans, "stargazers_count")
+      date = Map.get(ans, "pushed_at")                 
+      assert stars == 247
+      assert date == "2018-03-06T19:27:46Z" 
+    end
+  end
+
   @tag :other
   test "take_info function with some url",
     %{lib_test: lib_test} do
@@ -56,10 +66,20 @@ defmodule PollsterTest do
     end
   end
 
-  test "take_info function with uncorrect url",
+  test "take_info function with uncorrect git url",
     %{lib_test: lib_test} do
-    use_cassette "take_info uncorrect url" do
+    use_cassette "take_info uncorrect git url" do
       Extop.Pollster.take_info(%{lib_test | url: lib_test.url<>"/test"}, lib_test.is_git)
+      lib = Extop.Repo.get_by(Extop.Library, name: lib_test.name)
+      assert lib.stars == nil
+      assert lib.commited == nil 
+    end
+  end
+
+  test "take_info function with uncorrect not git url",
+    %{lib_test: lib_test} do
+    use_cassette "take_info uncorrect hex url" do
+      Extop.Pollster.take_info(%{lib_test | url: "https://hex.pm/pack/uncorrect_url"}, false)
       lib = Extop.Repo.get_by(Extop.Library, name: lib_test.name)
       assert lib.stars == nil
       assert lib.commited == nil 

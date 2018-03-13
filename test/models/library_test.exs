@@ -47,26 +47,24 @@ defmodule Extop.LibraryTest do
     refute changeset.valid?
   end
 
-  test "check days_passed function with correct data" do 
-    now = Timex.format!(Timex.now, "{ISO:Extended}")
-    yesterday = Timex.add(now, %Timex.Duration{megaseconds: 0, seconds: -86401, microseconds: 0})
-    Library.days_passed(yesterday)
-    assert "1"
+  test "days_passed function with correct data" do 
+    yesterday = Timex.shift(Timex.now, days: -1)
+    iso_yesterday = Timex.format!(yesterday, "{ISO:Extended}")
+    assert Library.days_passed(iso_yesterday) == 1
   end
 
-  test "check days_passed function with uncorrect data" do
-    Library.days_passed("Error")
-    assert ""
+  test "days_passed function with uncorrect data" do
+    assert Library.days_passed("Error") == nil
   end
 
-  test "check get_libraries with correct min_stars" do
+  test "get_libraries with correct min_stars" do
     libs = Library.get_libraries("5")  
     assert Map.has_key?(libs, "Test 1") 
     assert Map.has_key?(libs, "Test 3") 
     refute Map.has_key?(libs, "Test 2") 
   end
 
-  test "check get_libraries with uncorrect min_stars" do
+  test "get_libraries with uncorrect min_stars" do
     libs = Library.get_libraries("error")  
     assert Map.has_key?(libs, "Test 1") 
     assert Map.has_key?(libs, "Test 3") 

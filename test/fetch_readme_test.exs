@@ -23,6 +23,15 @@ defmodule FetchReadmeTest do
     end
   end
 
+  test "fetch function with uncorrect data" do
+    HTTPoison.start
+    use_cassette "fetch uncorrect data" do
+      Extop.FetchReadme.fetch()
+      assert length(Extop.Repo.all(Extop.File)) == 0 
+      assert length(Extop.Repo.all(Extop.Library)) == 0  
+    end
+  end
+
   test "validate_sha function with correct data" do
     {:ok, result} = Extop.FetchReadme.validate_sha({:ok, %{"content" => "MTIzNDU2", 
                         "size" => 6, "sha" => "4632e068d5889f042fe2d9254a9295e5f31a26c7"}})

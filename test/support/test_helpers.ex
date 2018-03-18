@@ -1,5 +1,4 @@
 defmodule Extop.TestHelpers do
-  alias Extop.Repo
 
   def insert_library(attrs \\ %{}) do
     changes = attrs |> Enum.into(%{name: "Library",
@@ -10,7 +9,7 @@ defmodule Extop.TestHelpers do
 
     %Extop.Library{}
     |> Extop.Library.insert_changeset(changes)
-    |> Repo.insert!()
+    |> Extop.Repo.insert!()
   end
 
   def insert_file(attrs \\ %{}) do
@@ -20,6 +19,6 @@ defmodule Extop.TestHelpers do
 
     %Extop.File{}
     |> Extop.File.changeset(changes)
-    |> Repo.insert!()
+    |> Extop.Repo.insert!()
   end
 end

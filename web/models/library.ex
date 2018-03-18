@@ -40,8 +40,16 @@ defmodule Extop.Library do
       end
     Extop.Repo.all(query)
     |> Enum.map(fn lib -> %{lib | commited: days_passed(lib.commited)} end)
+    |> Enum.map(fn lib -> %{lib | desc: parse_for_link(lib.desc)} end)
     |> Enum.reduce(%{}, fn(lib, acc) -> 
       Map.merge(acc, %{lib.folder => [lib]}, fn _k, v1, v2 -> List.flatten(v1, v2) end) end)
+  end
+
+  def parse_for_link(desc) do
+    case Regex.run(~r/(.+)?\[(.+?)\]\((.+?)\)(.+)?/, desc) do
+      nil                             -> desc
+      [^desc, str1, name, link, str2] -> str1<>"<a href=#{link}>#{name}</a>"<>str2
+    end
   end
 
   def days_passed(date) do 

@@ -19,22 +19,29 @@ defmodule Extop.LibraryTest do
       :ok
     end  
   end
- 
-  test "parse_for_links function without links" do
+
+  test "parse_for_md function witn `code`" do
+    desc = "Elixir library extending `Enum.min_by/2`, `Enum.max_by/2` and `Enum.min_max_by/2` to return a list of results instead of just one."
+    parsed_desc = Library.parse_for_md(desc)
+    refute String.contains?(parsed_desc, "`")
+    assert String.contains?(parsed_desc, "<code>")
+  end 
+
+  test "parse_for_md function without markdown" do
     desc = "Interface for HTTP webservers, frameworks and clients."
-    assert Library.parse_for_links(desc) == desc
+    assert Library.parse_for_md(desc) == desc
   end
 
-  test "parse_for_links function with one link" do
+  test "parse_for_md function with one link" do
     desc = "Spell is a [Web Application Messaging Protocol](http://wamp-proto.org/) (WAMP) client implementation in Elixir."
-    parsed_desc = Library.parse_for_links(desc)
+    parsed_desc = Library.parse_for_md(desc)
     refute String.contains?(parsed_desc, "[")
     assert String.contains?(parsed_desc, "href")
   end
 
-  test "parse_for_links function with several links" do
+  test "parse_for_md function with several links" do
     desc = "An Elixir library for parsing, constructing, and wildcard-matching URLs. Also available for [Ruby](https://github.com/gamache/fuzzyurl.rb) and [JavaScript](https://github.com/gamache/fuzzyurl.js)."
-    parsed_desc = Library.parse_for_links(desc)
+    parsed_desc = Library.parse_for_md(desc)
     refute String.contains?(parsed_desc, "[")
   end
 

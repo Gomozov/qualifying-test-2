@@ -40,14 +40,17 @@ defmodule Extop.Library do
       end
     Extop.Repo.all(query)
     |> Enum.map(fn lib -> %{lib | commited: days_passed(lib.commited)} end)
-    |> Enum.map(fn lib -> %{lib | desc: parse_for_links(lib.desc)} end)
+    |> Enum.map(fn lib -> %{lib | desc: parse_for_md(lib.desc)} end)
     |> Enum.reduce(%{}, fn(lib, acc) -> 
       Map.merge(acc, %{lib.folder => [lib]}, fn _k, v1, v2 -> List.flatten(v1, v2) end) end)
   end
 
-  def parse_for_links(desc) do
-    Regex.replace(~r/\[(.+?)\]\((.+?)\)/, desc, 
-                  fn(_, x, y) -> "<a href=#{y}>#{x}</a>"  end)
+  def parse_for_md(desc) do
+    desc
+    |> (&Regex.replace(~r/`(.+?)`/, &1, 
+                  fn(_, x) -> "<code>#{x}</code>" end)).()
+    |> (&Regex.replace(~r/\[(.+?)\]\((.+?)\)/, &1, 
+                  fn(_, x, y) -> "<a href=#{y}>#{x}</a>" end)).()
   end
 
   def days_passed(date) do 

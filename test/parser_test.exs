@@ -27,7 +27,7 @@ defmodule ParserTest do
     assert length(Extop.Repo.all(Extop.Library)) == 1261  
   end
 
-  test "Parser.parse_file function with Readme.md containing error-line" do
+  test "Parser.parse_file function with Readme.md contains error-line" do
     file = 
     File.open!("test/testfile3.md", [:read])
     |> IO.read(:all)
@@ -39,5 +39,19 @@ defmodule ParserTest do
       |> Enum.filter(&(&1.valid?))
       |> Enum.map(&Extop.Repo.insert!(&1))
     assert length(Extop.Repo.all(Extop.Library)) == 1259  
+  end
+
+  test "Parser.parse_file function with Readme.md doesn't contain line" do
+    file = 
+    File.open!("test/testfile4.md", [:read])
+    |> IO.read(:all)
+
+    list = Extop.Parser.parse_file(file)
+    assert Kernel.length(list) == 0
+    list
+      |> Enum.map(&Extop.Library.insert_changeset(%Extop.Library{}, &1))
+      |> Enum.filter(&(&1.valid?))
+      |> Enum.map(&Extop.Repo.insert!(&1))
+    assert length(Extop.Repo.all(Extop.Library)) == 0  
   end
 end

@@ -19,15 +19,15 @@ defmodule Extop.Parser do
   end
   
   defp parse_str(str, key) do
-    {str, %{folder: key, name: "", url: "", desc: "", is_git: false}}
-    |> get_line()
+    %{folder: key, name: "", url: "", desc: "", is_git: false}
+    |> get_line(str)
     |> check_url()
   end
 
-  defp get_line({str, lib}) do
+  defp get_line(lib, str) do
     regex = ~r/^(\*\s)\[([^]]+)\]\(([^)]+)\) - (.+)([\.\!]+)$/
     case Regex.run(regex, str) do
-      nil                                  -> 
+      nil -> 
         Logger.warn "Line doesn't match: '#{str}'"
         lib
       [^str, _star, name, url, desc, _dot] -> %{lib | name: name, url: url, desc: desc}
@@ -44,22 +44,22 @@ defmodule Extop.Parser do
   
   defp fetch_repo([head | tail], acc) do
     cond do
-      String.starts_with?(head, "##") -> fetch_repo(tail, Map.merge(acc, Map.new([{head, []}])), head)
+      String.starts_with?(head, "##") -> fetch_repo(tail, Map.merge(acc, %{head => []}), head)
       true                            -> fetch_repo(tail, acc)
     end
   end
 
   defp fetch_repo([head | []], acc, key) do
     cond do
-      String.starts_with?(head, "* ") -> Map.update!(acc, key, &Enum.concat(&1, [head]))
+      String.starts_with?(head, "* ") -> Map.update!(acc, key, &(&1++[head]))
       true                            -> acc
     end
   end
   
   defp fetch_repo([head | tail], acc, key) do
     cond do
-      String.starts_with?(head, "##") -> fetch_repo(tail, Map.merge(acc, Map.new([{head, []}])), head)
-      String.starts_with?(head, "* ") -> fetch_repo(tail, Map.update!(acc, key, &Enum.concat(&1, [head])), key)
+      String.starts_with?(head, "##") -> fetch_repo(tail, Map.merge(acc, %{head => []}), head)
+      String.starts_with?(head, "* ") -> fetch_repo(tail, Map.update!(acc, key, &(&1++[head])), key)
       true                            -> fetch_repo(tail, acc, key)
     end
   end

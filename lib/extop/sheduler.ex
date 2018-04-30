@@ -1,6 +1,5 @@
 defmodule Extop.Scheduler do
   use GenServer
-  require Logger
 
   @moduledoc """
   Calls Extop.FetchReadme and Extop.Pollster once a day. 

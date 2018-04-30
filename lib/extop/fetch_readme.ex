@@ -1,6 +1,5 @@
 defmodule Extop.FetchReadme do
-  alias Extop.Repo
-  alias Extop.File
+  alias Extop.{Repo, File}
   require Logger
 
   @moduledoc """
